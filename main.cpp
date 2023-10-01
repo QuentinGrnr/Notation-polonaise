@@ -16,7 +16,6 @@ using namespace std;
 int main(int argc,char** argv)
 {
 	expression expr;
-
 	/* Le programme principal a un argument d'entrée	*/
 	/* Le nom du fichier de test			*/
 	if(argc < 2)

@@ -40,15 +40,15 @@ void expression::lecture(char* filename)
 		cerr << "Erreur ouverture fichier" << filename << endl;
 	else{
 		cout << "Expr = ";
-		/* 
-		Ecrire ici une boucle qui lit caractère par caractère l'expression numérique
-		contenue dans filestream et insére chacun des caractères lû dans la file "file".
-		Attention le caractère 'f' ne doit pas être mis dans la file. Il indique juste la fin de
-		la lecture.
-
-		Dés qu'un cacractère c est lû, il doit aussi être affiché : en écrivant cout << c;
-		*/
-
+		while(!fin){
+			filestream.get(c);
+			if(c == 'f') {
+				fin = true;
+			} else {
+				cout << c;
+				file.push(c);
+			}
+		}
 	}
 	cout << endl;
 	filestream.close();
@@ -74,7 +74,48 @@ et retourner 30.
 (attention à ne pas rajouter d'espace après chaque expression)
 */
 
-double expression::calcul()
-{
-    return(0);
+double expression::calcul() {
+	double a, b, res;
+	char c;
+
+	while(!file.empty()) {
+		c = file.front();
+		file.pop();
+		if(c == '+') {
+			a = pile.top();
+			pile.pop();
+			b = pile.top();
+			pile.pop();
+			res = a + b;
+			pile.push(res);
+			cout << b << "+" << a << "=" << res << endl;
+		} else if(c == '-') {
+			a = pile.top();
+			pile.pop();
+			b = pile.top();
+			pile.pop();
+			res = b - a;
+			pile.push(res);
+			cout << b << "-" << a << "=" << res << endl;
+		} else if(c == '*') {
+			a = pile.top();
+			pile.pop();
+			b = pile.top();
+			pile.pop();
+			res = b * a;
+			pile.push(res);
+			cout << b << "*" << a << "=" << res << endl;
+		} else if(c == '/') {
+			a = pile.top();
+			pile.pop();
+			b = pile.top();
+			pile.pop();
+			res = b / a;
+			pile.push(res);
+			cout << b << "/" << a << "=" << res << endl;
+		} else {
+			pile.push(atof(&c));
+		}
+	}
+	return pile.top();
 }
